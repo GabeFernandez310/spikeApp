@@ -7,7 +7,7 @@ const connectDB = () => {
   try {
     //try to establish database connection
     const pool = new Pool({
-      connectionString: db,
+      connectionString: db || process.env.DATABASE_URL,
       ssl: {
         rejectUnauthorized: false,
       },
