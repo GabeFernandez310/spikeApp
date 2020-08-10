@@ -1,23 +1,24 @@
 //Establish connection to postgreSQL database
-const { Pool, Client } = require("pg");
+const { Pool } = require("pg");
 const config = require("config");
 const db = config.get("DB_URI");
 
-const pool = new Pool({
-  connectionString: db,
-});
+const connectDB = () => {
+  try {
+    //try to establish database connection
+    const pool = new Pool({
+      connectionString: db,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
 
-pool.query("SELECT NOW()", (err, res) => {
-  console.log(err, res);
-  pool.end();
-});
+    return pool;
+  } catch (err) {
+    //if connection fails report error message and exit process
+    console.error(err.message);
+    process.exit(1);
+  }
+};
 
-const client = new Client({
-  connectionString: db,
-});
-
-client.connect();
-client.query("SELECT NOW()", (err, res) => {
-  console.log(err, res);
-  client.end();
-});
+module.exports = connectDB;
