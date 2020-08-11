@@ -1,13 +1,13 @@
 //Establish connection to postgreSQL database
 const { Pool } = require("pg");
 const config = require("config");
-const db = config.get("DB_URI");
+//const db = config.get("DB_URI");
 
 const connectDB = () => {
   try {
     //try to establish database connection
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL || db,
+      connectionString: process.env.DATABASE_URL,
       ssl: {
         rejectUnauthorized: false,
       },
