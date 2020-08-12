@@ -17,6 +17,9 @@ pool.connect();
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
 
+  //TODO: remove this
+  app.get("/", (req, res) => res.send("Hello world"));
+
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(_dirname, "client", "build", "index.html"));
   });
